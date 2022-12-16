@@ -1,0 +1,8 @@
+HARDWARE SETUP:
+TTL signal from (BNC cable) should be connected to PIN A0 and GND 
+For camera (BNC cable) should be connected to PIN A2 and GND 
+
+SCRIPT:
+Start the script and define Frequency, High pulse duration and how long should the series of sent pulses last. 
+click on "Start" button (or enter) to start waiting for the TTL signal (on A0)
+click on "Stop" button (or enter) to stop waiting for the TTL signal (on A0)
