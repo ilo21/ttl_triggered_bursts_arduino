@@ -5,7 +5,7 @@ Pulse on one channel triggers a series of pulses on the other channel
 
 ## Description
 Trigger from one device can result in sending a series of pulses to another device.<br>
-One can select frequency, pulse duration and for how long after the trigger to send those pulses.
+Through graphical user interface, one can select frequency, pulse duration and for how long after the trigger to send those pulses.
 ## Hardware
 - Arduino MKRZero
 ## Software
