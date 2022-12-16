@@ -2,12 +2,7 @@
 #include <Wire.h>
 // About serial communication:
 // https://forum.arduino.cc/t/serial-input-basics-updated/382007
-// Make Serial Monitor compatible for all TinyCircuits processors
-#if defined(ARDUINO_ARCH_AVR)
-  #define SerialMonitorInterface Serial
-#elif defined(ARDUINO_ARCH_SAMD)
-  #define SerialMonitorInterface SerialUSB
-#endif
+
 
 
 int TTL_PIN = A0; // input for TTL trigger
@@ -40,7 +35,7 @@ char quitChar = 'Q';
 void setup() {
 
   // start serial communication
-  SerialMonitorInterface.begin(115200);
+  Serial.begin(115200);
   Wire.begin();			
 
 
@@ -59,10 +54,7 @@ void loop() {
     recvOneChar();
 
   } // end if values were not received 
-    //int current_time = millis();
-    // run for x time
-     //if (millis() < current_time + HOW_LONG_SEC*1000) { // Returns the number of milliseconds passed since the Arduino board began running the current program. Will go back to zero after approximately 50 days.
-   // } // end running for x time
+    
   if (armed == true) {
     TTL_PIN_STATE = digitalRead(TTL_PIN);
     if (TTL_PIN_STATE == HIGH) {
@@ -88,8 +80,8 @@ void recvWithEndMarker() {
     char endMarker = '\n';
     char rc;
     
-    while (SerialMonitorInterface.available() > 0 && valuesReceived == false) {
-        rc = SerialMonitorInterface.read();     
+    while (Serial.available() > 0 && valuesReceived == false) {
+        rc = Serial.read();     
         if (rc != endMarker) {
             receivedChars[ndx] = rc;
             ndx++;
@@ -136,11 +128,11 @@ void assignValues() {
     low_pulse_width_ms = cycle_ms - HIGH_PULSE_WIDTH_MS;
     num_of_cycles = HOW_LONG_SEC*1000/cycle_ms;
 
-    SerialMonitorInterface.print(TARGET_FREQ_Hz);
-    SerialMonitorInterface.print(",");
-    SerialMonitorInterface.print(HIGH_PULSE_WIDTH_MS);
-    SerialMonitorInterface.print(",");
-    SerialMonitorInterface.println(HOW_LONG_SEC);
+    Serial.print(TARGET_FREQ_Hz);
+    Serial.print(",");
+    Serial.print(HIGH_PULSE_WIDTH_MS);
+    Serial.print(",");
+    Serial.println(HOW_LONG_SEC);
 
     // clear character array
     for( int i = 0; i < sizeof(receivedChars);  ++i ) {
@@ -151,16 +143,16 @@ void assignValues() {
 }
 
 void recvOneChar() {
-    if (SerialMonitorInterface.available() > -1) {
+    if (Serial.available() > -1) {
         singleChar = Serial.read();
         if (singleChar == resetChar) {
-          SerialMonitorInterface.println(singleChar);
+          Serial.println(singleChar);
           armed = true;
           receivedNewChar = true;
           valuesReceived = false;
         }
         else if (singleChar == quitChar) {
-          SerialMonitorInterface.println(singleChar);
+          Serial.println(singleChar);
           armed = false;
           valuesReceived = false;
           digitalWrite(BURST_OUT_PIN, 0);
