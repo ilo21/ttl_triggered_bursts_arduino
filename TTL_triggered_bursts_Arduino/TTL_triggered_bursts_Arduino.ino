@@ -7,6 +7,7 @@
 
 int TTL_PIN = A0; // input for TTL trigger
 int BURST_OUT_PIN = A2; //pulse output for bursts
+int BURST_OUT_PIN2 = A4; //pulse output for bursts
 
 // values
 int TARGET_FREQ_Hz = 1;
@@ -17,6 +18,7 @@ int TTL_PIN_STATE = LOW; //defines TTL_PIN state state
 int cycle_ms = int(1000/TARGET_FREQ_Hz);
 int low_pulse_width_ms = cycle_ms - HIGH_PULSE_WIDTH_MS;
 int num_of_cycles = HOW_LONG_SEC/cycle_ms;
+
 
 int ctr = 0;
 int readValue;
@@ -64,15 +66,17 @@ void loop() {
         sendBurst();
       } // end running for x time
       receivedNewChar = false;
-    }
+    } // end if was high
   } // end if was received
   
 } // end loop
 
 void sendBurst() {
-    digitalWrite(BURST_OUT_PIN, 1);       
+    digitalWrite(BURST_OUT_PIN, 1);   
+    digitalWrite(BURST_OUT_PIN2, 1);     
     delay(HIGH_PULSE_WIDTH_MS);               // high pulse width delay 
     digitalWrite(BURST_OUT_PIN, 0);
+    digitalWrite(BURST_OUT_PIN2, 0);
     delay(low_pulse_width_ms);                // low pulse width delay  
 } // end sendBurst
 

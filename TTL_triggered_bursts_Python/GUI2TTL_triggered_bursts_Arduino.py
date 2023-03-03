@@ -203,6 +203,19 @@ class MySettingsWidget(QMainWindow):
                                             print(data)
                                             received = True  # mark as received and confirmed
                                             break
+                                            ##################################################
+                                            # debug
+                                            ##################################################
+                                            # count = 0
+                                            # while count < 500000:
+                                            #     count +=1
+                                            #     line = self.arduino.readline()
+                                            #     try:
+                                            #         data=line[0:][:-2].decode("utf-8")   
+                                            #         print(data)
+                                            #     except:
+                                            #         print("nothing decoded")
+                                            #########################################################
                                     except:
                                         print("Could not decode confirmation")
                             except:
