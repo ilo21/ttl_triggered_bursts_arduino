@@ -56,6 +56,8 @@ void loop() {
   } // end if values were not received 
     
   if (armed == true) {
+    // check for stopping
+    recvOneChar();
     TTL_PIN_STATE = digitalRead(TTL_PIN);
     if (TTL_PIN_STATE == HIGH) {
       for (int i=0; i < num_of_cycles; i++) {
@@ -155,6 +157,7 @@ void recvOneChar() {
           Serial.println(singleChar);
           armed = false;
           valuesReceived = false;
+          receivedNewChar = false;
           digitalWrite(BURST_OUT_PIN, 0);
           TARGET_FREQ_Hz = 1;
           HIGH_PULSE_WIDTH_MS = 0;
